@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="fr"><meta charset="utf-8"/>
+<title>Snake</title>
+<style>
+body{display:flex;flex-direction:column;align-items:center;font-family:sans-serif;background:#222;color:#eee}
+canvas{background:#111;border:4px solid #444;margin-top:1rem}
+</style>
+<h1>Snake</h1><small>Flèches pour jouer</small>
+<canvas id="c" width="400" height="400"></canvas>
+<script>
+const cvs=c.getContext('2d'),size=20,cols=20,rows=20;
+let snake=[[10,10]],dir=[1,0],food=[15,10],game;
+document.addEventListener('keydown',e=>{
+  const k={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];
+  if(k&& (k[0]!==-dir[0]||k[1]!==-dir[1]))dir=k;
+});
+function tick(){
+  const head=[snake[0][0]+dir[0],snake[0][1]+dir[1]];
+  if(head[0]<0||head[0]>=cols||head[1]<0||head[1]>=rows||snake.some(s=>s[0]==head[0]&&s[1]==head[1])){clearInterval(game);return alert('Perdu !');}
+  snake.unshift(head);
+  if(head[0]==food[0]&&head[1]==food[1])food=[Math.floor(Math.random()*cols),Math.floor(Math.random()*rows)];
+  else snake.pop();
+  draw();
+}
+function draw(){
+  cvs.fillStyle='#111';cvs.fillRect(0,0,400,400);
+  cvs.fillStyle='lime';snake.forEach(([x,y])=>cvs.fillRect(x*size,y*size,size-2,size-2));
+  cvs.fillStyle='red';cvs.fillRect(food[0]*size,food[1]*size,size-2,size-2);
+}
+draw();game=setInterval(tick,120);
+</script></html>

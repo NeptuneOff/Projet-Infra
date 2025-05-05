@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="fr"><meta charset="utf-8"/>
+<title>Pierre‑Feuille‑Ciseaux</title>
+<style>
+body{font-family:sans-serif;text-align:center;background:#fdf6e3}
+button{font-size:2rem;margin:.5rem 1rem;padding:.3rem .8rem}
+#log{margin-top:1rem;font-weight:bold}
+</style>
+<h1>Pierre‑Feuille‑Ciseaux</h1>
+<div>
+  <button onclick="play('✊')">✊</button>
+  <button onclick="play('✋')">✋</button>
+  <button onclick="play('✌️')">✌️</button>
+</div>
+<div id="log"></div>
+<script>
+const beats={ '✊':'✌️', '✋':'✊', '✌️':'✋'};
+function play(user){
+  const choices=Object.keys(beats),cpu=choices[Math.floor(Math.random()*3)];
+  let res=user===cpu?'Égalité':beats[user]===cpu?'Gagné 🎉':'Perdu 😢';
+  log.textContent=`Toi ${user}  vs  ${cpu} Ordinateur  →  ${res}`;
+}
+</script></html>
